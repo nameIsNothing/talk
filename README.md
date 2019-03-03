@@ -1,0 +1,2 @@
+# talk
+practice of python
