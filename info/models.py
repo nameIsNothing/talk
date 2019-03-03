@@ -25,3 +25,17 @@ class File(BaseModel,db.Model):
             'file_folder':self.file_folder
         }
         return dic
+
+class Superlink(BaseModel, db.Model):
+    __tablename__ = 'info_superlink'
+
+    id = db.Column(db.Integer, primary_key= True)
+    link_name = db.Column(db.String(32), unique=True, nullable=False)
+    link_url = db.Column(db.Text(200), nullable=False)
+
+    def to_dic(self):
+        dic = {
+            'link_name':self.link_name,
+            'link_url':self.link_url
+        }
+        return dic

@@ -1,12 +1,7 @@
 import datetime
-import os
 from threading import Lock
-
-from flask import jsonify,abort
-from flask import make_response
+from flask import jsonify
 from flask import request
-from flask import send_from_directory
-
 from . import pytalk_blu
 
 lock = Lock()

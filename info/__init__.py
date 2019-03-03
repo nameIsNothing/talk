@@ -17,8 +17,8 @@ def create_app():
     global redis_store
     redis_store = StrictRedis(Config.redis_host, Config.redis_port)
 
-    CSRFProtect(app)
-    Session(app)
+    # CSRFProtect(app)
+    # Session(app)
 
     # 导入蓝图
     from info.modules.index import index_blu
@@ -27,6 +27,8 @@ def create_app():
     app.register_blueprint(pytalk_blu)
     from info.modules.up_download import up_download_blu
     app.register_blueprint(up_download_blu)
+    from info.modules.superlink import superlink_blu
+    app.register_blueprint(superlink_blu)
 
 
     from flask_wtf.csrf import generate_csrf

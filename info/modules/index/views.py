@@ -5,12 +5,10 @@ from . import index_blu
 
 @index_blu.route('/')
 def index():
-    # return 'hello'
     return render_template('index.html')
 
 @index_blu.route('/pytalk')
 def chat():
-
     return render_template('pyMiniTalk.html')
 
 @index_blu.route('/delete')

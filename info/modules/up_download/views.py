@@ -46,7 +46,7 @@ def update_file_st():
     return jsonify(error='上传成功')
 
 
-
+# 查询文件列表
 @up_download_blu.route('/update_file_list')
 def update_file_list():
     try:
@@ -68,12 +68,17 @@ def delete_file():
     except Exception as e:
         return '连接远程失败'
     if info == None:
-        return '远程已无文件删除'
+        if rmdate(file_address):
+            return '删除数据失败'
+        return '远程已无文件删除，已更新数据库'
+    if rmdate(file_address):
+        return '删除数据失败'
+    return '成功'
+
+def rmdate(file_address):
     try:
         dat = File.query.filter(File.file_address == file_address).first()
         db.session.delete(dat)
         db.session.commit()
     except Exception as e:
-        return '数据库删除失败'
-
-    return '成功'
+        return 'false'
