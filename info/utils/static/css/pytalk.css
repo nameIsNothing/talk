@@ -1,0 +1,62 @@
+  /* 背景动画图 */
+        canvas{
+            position:absolute;
+            top:0;
+            left:0;
+            background-color:black;
+            z-index: -1;}
+
+        /* .first_line{} */
+        .logo_head{height: 100px;width: 1000px; margin: 0 auto;padding-top: 30px;}
+        h1{color: red}
+
+        /* .second_line{} */
+        .update_box{width: 220px;height: 65px;padding: 20px; position: absolute;background-color: rgba(255, 51, 204, 0.2);display: none;}
+        .talk_body{width: 1100px;height: 460px;margin: 0 auto;}
+        .file_download{width: 200px;height: 460px;box-sizing: border-box;margin: 0 10px 0 0;padding: 10px;  background-color:rgba(225,0,225, 0.2);float: left;position: relative;}
+        .file_download ul{list-style: none;margin: 0;padding: 0;}
+        .file_download a{text-decoration: none;color: white}
+        .s_list{background-color:rgba(225, 0, 225, 0.2);display: none;}
+        .level1{color: #999999;cursor:pointer;width: 180px;height: 22px;background-color: rgba(225, 0, 225, 0.2);}
+        .level1 div{width: 160px;height: 22px; float: left;}
+
+
+        .talk_box{width: 580px;height: 440px;background-color: rgba(225, 0, 225, 0.2);float: left;padding: 10px;}
+        .talk_contant{width: 570px;height: 290px;background-color: rgba(225, 0, 225, 0);border: 5px solid #666666;overflow: auto;}
+        .history{margin: 0 auto;text-align: center;}
+        .history span{color: #666666;font-size: 10px;cursor:pointer;}
+
+        .atalk{
+           margin:10px;
+        }
+        .atalk .username{font-size: 7px;margin: 0;padding: 0;background-color:rgba(225, 0, 225, 0);color: #b4b4b4}
+        .atalk span{
+            display:inline-block;
+            background:#6699cc;
+            border-radius:10px;
+            color:#fff;
+            padding:5px 10px;}
+        .atalk p,.btalk p{margin:0;padding: 0;font-size: 5px;color: rgb(182, 180, 180);}
+        .btalk{
+            margin:10px;
+            text-align:right;}
+        .btalk span{
+            display:inline-block;
+            background:#ffff66;
+            border-radius:10px;
+            color:#333333;
+            padding:5px 10px;
+        }
+        .function_area{color: #fff;font-weight: bold;}
+        .function_area input{background-color: rgba(255, 51, 204, 0);border: #555454 3px solid;color: gold;height: 18px;}
+
+        .talk_input_contant{width: 580px;height: 115px;box-sizing: border-box; background-color: rgba(255, 51, 204, 0);border: 5px solid #666666}
+        .talk_input_contant textarea{width: 407px;height: 100px;border: 0; background-color: rgba(225, 0, 225, 0); color: #fff; float: left;outline: none;resize: none;margin: 0;}
+        .talk_input_contant button{width: 159px;height: 106px;float: left;margin: 0;background-color: rgba(225, 0, 225, 0.5);font-size: 16px;border: 0;color: #CCCCFF;}
+
+        .link_box{width: 200px;height: 460px;margin: 0 0 0 10px; background-color: rgba(255, 51, 204, 0.2);float: left;}
+        .link_list{padding: 0;margin: 16px 16px;}
+        .link_list li{list-style: none;}
+        .link_list a{text-decoration: none;color: #666666;}
+
+        .PK{position: fixed;top: 96%;left: 96%;color: white;}
