@@ -35,6 +35,7 @@ class Superlink(BaseModel, db.Model):
 
     def to_dic(self):
         dic = {
+            'link_id':self.id,
             'link_name':self.link_name,
             'link_url':self.link_url
         }
