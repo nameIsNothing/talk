@@ -37,6 +37,7 @@ class Superlink(BaseModel, db.Model):
 
     def to_dic(self):
         dic = {
+            'link_id':self.id,
             'link_name':self.link_name,
             'link_url':self.link_url
         }
@@ -51,14 +52,3 @@ class Users(BaseModel, db.Model):
     user_name = db.Column(db.String(16), unique=True, nullable=False)
     password = db.Column(db.String(16), nullable=False)
     mobile = db.Column(db.Integer)
-
-    # @property
-    # def password(self):
-    #     raise AttributeError("当前属性不可读")
-    #
-    # @password.setter
-    # def password(self, value):
-    #     self.password_hash = generate_password_hash(value)
-    #
-    # def check_passowrd(self, password):
-    #     return check_password_hash(self.password_hash, password)

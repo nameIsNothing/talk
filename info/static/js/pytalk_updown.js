@@ -10,7 +10,6 @@ $(function () {
         return r ? r[1] : undefined;
         }
 
-
     // 更新下载列表
     update_list()
      // 下载栏滑动
@@ -75,14 +74,10 @@ $(function () {
             })
             .done(function(dat){
                 var date = dat.file_list
-
-
                 var $st_list = $('#st_list')
                 var $oth_list = $('#oth_list')
                 $st_list.empty()
                 $oth_list.empty()
-
-
                 for (i in date){
                     var info = '<li><a href="http://down.python34.top/'+ date[i].file_address +'?attname='+ date[i].file_name +'">'+ date[i].file_name +'</a></li>'
                     if (date[i].file_folder == '1'){
@@ -92,8 +87,6 @@ $(function () {
                         $oth_list.append($(info))
                     }
                 }
-
-
             })
             .fail(function(){alert('下载列表更新失败')})
             }

@@ -11,6 +11,7 @@
     <script src="../static/js/pytalk_chat.js"></script>
     <script src="../static/js/pytalk_background_animate.js"></script>
     <script src="../static/js/pytalk_updown.js"></script>
+    <script src="../static/js/pytalk_link.js"></script>
 
 </head>
 <body>
@@ -67,8 +68,17 @@
                 </div>
             </div>
             <div class="link_box"> <!-- 链接地址 -->
+                <div class="link_add_box" style="display:none"><!-- 隐藏新增块 -->
+                    <div class="link_input_div"><span>请输入链接名称：</span><input id="link_name" type="text"></div>
+                    <div class="link_input_div"><span>请输入链接地址：</span><input id="link_url" type="text"></div>
+                    <div class="link_input_button_div"><button id="add_link"></button><button id="close_linkaddbox">取消</button></div>
+                    
+                </div>
                 <ul class="link_list">
-                    <li> <a href="http://ntlias-stu.boxuegu.com/#/login" target="_blank">博学谷内网登录链接</a></li>
+                    <div id="link_add_div" style="display:none"><button id="link_closeaddbox_button" title="取消">取消</button><button id="link_openaddbox_button" title="新增">新增</button></div>
+                    <div id="link_edit_div"><button id="link_edit_button" class="link_edit_button" title="编辑">＋</button></div>
+                    <br>
+                    <li><a href="http://ntlias-stu.boxuegu.com/#/login" target="_blank">博学谷内网登录链接</a><img id="del_link" class="link_edit_img" src="../static/picture/delete.jpg" alt="删除" title="删除">&nbsp;<img id="link_edit" class="link_edit_img" src="../static/picture/update.jpg" alt="修改" title="修改"></li>
                     <li><a href="http://tlias-stu.boxuegu.com/#/login" target="_blank">博学谷外网登录链接</a></li>
                     <li><a href="http://www.baidu.com" target="_blank">百度链接</a></li>
                 </ul>
