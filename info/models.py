@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from info import db
 
 
@@ -39,3 +41,24 @@ class Superlink(BaseModel, db.Model):
             'link_url':self.link_url
         }
         return dic
+
+
+class Users(BaseModel, db.Model):
+    __tablename__ = 'user_info'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), unique=True)
+    user_name = db.Column(db.String(16), unique=True, nullable=False)
+    password = db.Column(db.String(16), nullable=False)
+    mobile = db.Column(db.Integer)
+
+    # @property
+    # def password(self):
+    #     raise AttributeError("当前属性不可读")
+    #
+    # @password.setter
+    # def password(self, value):
+    #     self.password_hash = generate_password_hash(value)
+    #
+    # def check_passowrd(self, password):
+    #     return check_password_hash(self.password_hash, password)
