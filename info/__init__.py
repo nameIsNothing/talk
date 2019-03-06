@@ -29,6 +29,8 @@ def create_app():
     app.register_blueprint(up_download_blu)
     from info.modules.superlink import superlink_blu
     app.register_blueprint(superlink_blu)
+    from info.modules.users import zc_register_blu
+    app.register_blueprint(zc_register_blu)
 
 
     from flask_wtf.csrf import generate_csrf
