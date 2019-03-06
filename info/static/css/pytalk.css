@@ -55,11 +55,12 @@
         .talk_input_contant button{width: 159px;height: 106px;float: left;margin: 0;background-color: rgba(225, 0, 225, 0.5);font-size: 16px;border: 0;color: #CCCCFF;}
 
         .link_box{width: 220px;height: 460px;margin: 0 0 0 10px; background-color: rgba(255, 51, 204, 0.2);float: left;}
-        .link_list{padding: 0;margin: 16px 16px;}
+        .link_list{padding: 0;margin: 5px 16px 0 16px;}
         .link_list li{list-style: none;}
         .link_list a{text-decoration: none;color: #666666;}
-        .link_list img{height: 12px; width: 12px; float: right; margin: 5px 0 0 5px;}
-        .link_list button{background: none; border: none; float: right; color:white;padding-right: 0px;}
+        .link_list img{height: 13px; width: 13px; float: right; margin: 2px 0 0 5px;}
+        .button_div {margin:10px 16px 0 0; height: 22px;}
+        .button_div button{background: none; border: none; float: right; color:white;padding-right: 0px;}
         .link_edit_button{ font-weight:bold; font-size: 20px; width: 20px; height: 20px; }
         .link_edit_img{display: none;}
         .link_add_box{width: 390px; height: 140px; padding-top: 10px; position: absolute; background-color: rgba(255, 51, 204, 0.4); right: 150px;}

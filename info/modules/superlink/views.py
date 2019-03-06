@@ -8,6 +8,7 @@ from . import superlink_blu
 @superlink_blu.route('/add_link', methods = ['post'])
 def add_link():
     data = request.json
+    print(data)
     if not data:
         return jsonify({'error_no':400, 'error_ms':'参数错误'})
     try:
@@ -32,7 +33,7 @@ def add_link():
     return jsonify({'error_no':200, 'error_ms':'ok'})
 
 # 删除链接
-@superlink_blu.route('/del_link/<int:del_id>', methods=['delete'])
+@superlink_blu.route('/del_link/<int:del_id>', methods=['DELETE'])
 def del_link(del_id):
     try:
         del_dat = Superlink.query.get(del_id)
