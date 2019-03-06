@@ -54,9 +54,18 @@
         .talk_input_contant textarea{width: 407px;height: 100px;border: 0; background-color: rgba(225, 0, 225, 0); color: #fff; float: left;outline: none;resize: none;margin: 0;}
         .talk_input_contant button{width: 159px;height: 106px;float: left;margin: 0;background-color: rgba(225, 0, 225, 0.5);font-size: 16px;border: 0;color: #CCCCFF;}
 
-        .link_box{width: 200px;height: 460px;margin: 0 0 0 10px; background-color: rgba(255, 51, 204, 0.2);float: left;}
+        .link_box{width: 220px;height: 460px;margin: 0 0 0 10px; background-color: rgba(255, 51, 204, 0.2);float: left;}
         .link_list{padding: 0;margin: 16px 16px;}
         .link_list li{list-style: none;}
         .link_list a{text-decoration: none;color: #666666;}
+        .link_list img{height: 12px; width: 12px; float: right; margin: 5px 0 0 5px;}
+        .link_list button{background: none; border: none; float: right; color:white;padding-right: 0px;}
+        .link_edit_button{ font-weight:bold; font-size: 20px; width: 20px; height: 20px; }
+        .link_edit_img{display: none;}
+        .link_add_box{width: 390px; height: 140px; padding-top: 10px; position: absolute; background-color: rgba(255, 51, 204, 0.4); right: 150px;}
+        .link_add_box span{color: white;}
+        .link_input_div{margin: 15px 0 10px 35px;}
+        .link_input_button_div{margin: 20px 0 0 240px;}
+        .link_input_button_div button{margin-left: 5px;}
 
         .PK{position: fixed;top: 96%;left: 96%;color: white;}
