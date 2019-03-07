@@ -14,11 +14,13 @@
         .update_box{width: 220px;height: 65px;padding: 20px; position: absolute;background-color: rgba(255, 51, 204, 0.2);display: none;}
         .talk_body{width: 1100px;height: 460px;margin: 0 auto;}
         .file_download{width: 200px;height: 460px;box-sizing: border-box;margin: 0 10px 0 0;padding: 10px;  background-color:rgba(225,0,225, 0.2);float: left;position: relative;}
+        .file_download button{background: none; border: none; float: right; color:white; padding-right: 0px;}
         .file_download ul{list-style: none;margin: 0;padding: 0;}
         .file_download a{text-decoration: none;color: white}
+        .file_download img{height: 13px; width: 13px; float: right; margin: 2px 0 0 5px;}
         .s_list{background-color:rgba(225, 0, 225, 0.2);display: none;}
-        .level1{color: #999999;cursor:pointer;width: 180px;height: 22px;background-color: rgba(225, 0, 225, 0.2);}
-        .level1 div{width: 160px;height: 22px; float: left;}
+        .level1{color: #999999;cursor:pointer;width: 180px;height: 30px;background-color: rgba(225, 0, 225, 0.2);}
+        .level1 div{height: 22px; float: right;padding-top: 2px;}
 
 
         .talk_box{width: 580px;height: 440px;background-color: rgba(225, 0, 225, 0.2);float: left;padding: 10px;}

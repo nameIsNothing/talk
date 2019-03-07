@@ -13,8 +13,6 @@ $(function(){
     var $link_add_box = $('.link_add_box')
     var $add_link_button = $('#add_link')
     var $close_linkaddbox = $('#close_linkaddbox')
-    var $link_edit_img_clink = $('#link_edit')
-    var $link_del_img_clink = $('#del_link')
     var $link_name = $('#link_name')
     var $link_url = $('#link_url')
     // 更新链接列表

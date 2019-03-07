@@ -22,6 +22,7 @@ class File(BaseModel,db.Model):
 
     def to_dic(self):
         dic = {
+            'file_id':self.id,
             'file_name':self.file_name,
             'file_address':self.file_address,
             'file_folder':self.file_folder

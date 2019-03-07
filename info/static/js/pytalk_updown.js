@@ -10,6 +10,19 @@ $(function () {
         return r ? r[1] : undefined;
         }
 
+    var $st_up = $('#st_up')
+    var $ot_up = $('#ot_up')
+    var $st_file_edit_div = $('#st_file_edit_div')
+    var $st_file_out_edit_button = $('#st_file_out_edit_button')
+    var $file_openadd_st_box_button = $('#file_openadd_st_box_button')
+    var $ot_file_edit_div = $('#ot_file_edit_div')
+    var $ot_file_out_edit_button = $('#ot_file_out_edit_button')
+    var $file_openadd_ot_box_button = $('#file_openadd_ot_box_button')
+    var $all_file_list = $('#all_file_list')
+    var $del_file_img = null
+    var $up_box = $('.update_box')
+    var position = null
+
     // 更新下载列表
     update_list()
      // 下载栏滑动
@@ -23,11 +36,24 @@ $(function () {
             })
 
         // 文件上传功能
-        // 点击加号触发
-        var $up_box = $('.update_box')
-        var position = null   // 标记上传位置
-        $('#st_up').click(function(){position = 'st';$up_box.fadeIn()})
-        $('#or_up').click(function(){position = 'ot';$up_box.fadeIn()})
+        // 显示知识文件编辑栏
+        $st_up.click(function(){$st_file_edit_div.show();$st_up.hide();$del_file_img.show()})
+        // 取消知识文件编辑
+        $st_file_out_edit_button.click(function(){$st_file_edit_div.hide();$st_up.show();$del_file_img.hide()})
+        // 打开知识文件上传
+        $file_openadd_st_box_button.click(function(){position = 'st';$up_box.fadeIn()})
+        // 显示其他文件编辑栏
+        $ot_up.click(function(){$ot_file_edit_div.show();$ot_up.hide();$del_file_img.show()})
+        // 取消其他文件编辑
+        $ot_file_out_edit_button.click(function(){$ot_file_edit_div.hide();$ot_up.show();$del_file_img.hide()})
+        // 打开其他文件上传
+        $file_openadd_ot_box_button.click(function(){position = 'ot';$up_box.fadeIn()})
+        // 点击删除文件
+        $all_file_list.delegate('#del_file', 'click', function(){
+            var id = $(this).prev().prop('id')
+            fc_del_file_ajax(id)
+            update_list()
+        })
         // 上传面板功能
         var $up_bt = $('#up_bt')
         $up_bt.click(function(){
@@ -79,7 +105,7 @@ $(function () {
                 $st_list.empty()
                 $oth_list.empty()
                 for (i in date){
-                    var info = '<li><a href="http://down.python34.top/'+ date[i].file_address +'?attname='+ date[i].file_name +'">'+ date[i].file_name +'</a></li>'
+                    var info = '<li><a id="' +date[i].file_id + '" href="http://down.python34.top/'+ date[i].file_address +'?attname='+ date[i].file_name +'">'+ date[i].file_name +'</a><img id="del_file" class="link_edit_img" src="../static/picture/delete.jpg" alt="删除" title="删除"></li>'
                     if (date[i].file_folder == '1'){
                         $st_list.append($(info))
                     }
@@ -87,9 +113,26 @@ $(function () {
                         $oth_list.append($(info))
                     }
                 }
+                $del_file_img = $('#download_box img')
             })
             .fail(function(){alert('下载列表更新失败')})
             }
 
-
+    function fc_del_file_ajax(id){
+        $.ajax({
+            url:'/up_download/delete_file/'+ id,
+            headers: {"X-CSRFToken": getCookie("csrf_token")},
+            type:'DELETE',
+            dataType:'json',
+        })
+        .done(
+            function(dat){
+                alert(dat['error_ms'])
+            })
+        .fail(
+            function(){
+                alert('请求失败，请检查网络连接')
+            }
+        )
+    }
 })
