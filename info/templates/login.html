@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>绿色清爽响应式登录页面模板</title>
+    <script  src="../static/js/jquery-1.7.2.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; }
+        html { height: 100%; }
+        body { height: 100%; background: #fff url(../static/picture/background.png) 50% 50% no-repeat; background-size: cover;}
+        .dowebok { position: absolute; left: 50%; top: 50%; width: 430px; height: 550px; margin: -290px 0 0 -215px; border: 1px solid #fff; border-radius: 20px; overflow: hidden;}
+        .logo { width: 104px; height: 104px; margin: 50px auto 80px; background: url(../static/picture/login.png) 0 0 no-repeat; }
+        .login_form_item { position: relative; width: 360px; margin: 0 auto; padding-bottom: 30px;}
+        .login_form_item input { width: 288px; height: 48px; padding-left: 70px; border: 1px solid #fff; border-radius: 25px; font-size: 18px; color: #fff; background-color: transparent; outline: none;}
+        .login_form_item button { width: 360px; height: 50px; border: 0; border-radius: 25px; font-size: 18px; color: #1f6f4a; outline: none; cursor: pointer; background-color: #fff; }
+        .register_form_item { position: relative; width: 360px; margin: 0 auto; padding-bottom: 19px;}
+        .register_form_item input { width: 288px; height: 48px; padding-left: 70px; border: 1px solid #fff; border-radius: 25px; font-size: 18px; color: #fff; background-color: transparent; outline: none;}
+        .register_button { width: 360px; height: 50px; border: 0; border-radius: 25px; font-size: 18px; color: #1f6f4a; outline: none; cursor: pointer; background-color: #fff; margin-top: 10px; }
+        .register_check_img {width: 130px; height: 48px; position: absolute; border-radius: 25px; right: 1px; top: 1px;}
+        .send_phone_sms {border: 1px solid #fff; background: none;}
+        #username { background: url(../static/picture/emil.png) 20px 14px no-repeat; }
+        #password { background: url(../static/picture/password.png) 23px 11px no-repeat; }
+        .tip { display: none; position: absolute; left: 20px; top: 52px; font-size: 14px; color: #f50; }
+        .reg-bar { width: 360px; margin: 20px auto 0; font-size: 14px; overflow: hidden;}
+        .reg-bar a { color: #fff; text-decoration: none; }
+        .reg-bar a:hover { text-decoration: underline; }
+        .reg-bar .reg { float: left; }
+        .reg-bar .forget { float: right; }
+        .dowebok ::-webkit-input-placeholder { font-size: 18px; line-height: 1.4; color: #fff;}
+        .dowebok :-moz-placeholder { font-size: 18px; line-height: 1.4; color: #fff;}
+        .dowebok ::-moz-placeholder { font-size: 18px; line-height: 1.4; color: #fff;}
+        .dowebok :-ms-input-placeholder { font-size: 18px; line-height: 1.4; color: #fff;}
+
+        @media screen and (max-width: 500px) {
+            * { box-sizing: border-box; }
+            .dowebok { position: static; width: auto; height: auto; margin: 0 30px; border: 0; border-radius: 0; }
+            .logo { margin: 50px auto; }
+            .login_form_item { width: auto; }
+            .login_form_item input, .login_form_item button, .reg-bar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 登录栏 -->
+    <div id="login_box" class="dowebok" >
+        <div class="logo"></div>
+        <div class="login_form_item">
+            <input id="username" type="text"  placeholder="请输入用户名或手机号">
+            <p class="tip">请输入有效的用户名</p>
+        </div>
+        <div class="login_form_item">
+            <input id="password" type="password" autocomplete="off" placeholder="登录密码">
+            <p class="tip">邮箱或密码不正确</p>
+        </div>
+        <div class="login_form_item"><button id="submit">登 录</button></div>
+        <div class="reg-bar">
+            <a id="enter_register" class="reg" href="javascript:">立即注册</a>
+            <a class="forget" href="javascript:">忘记密码</a>
+        </div>
+    </div>
+    <!-- 注册栏 -->
+    <div id="register_box" class="dowebok" style="display:none; padding-top: 40px;">
+        <div class="register_form_item">
+            <input id="username" type="text"  placeholder="请输入一个新用户名">
+            <p class="tip">该用户名已存在</p>
+        </div>
+        <div class="register_form_item">
+            <input id="password" type="password" autocomplete="off" placeholder="请输入密码">
+        </div>
+        <div class="register_form_item">
+            <input id="password" type="password" autocomplete="off" placeholder="请再次确认密码">
+            <p class="tip">两次密码不一致</p>
+        </div>
+        <div class="register_form_item">
+            <input id="username" type="text"  placeholder="请输入手机号">
+            <p class="tip">请输入有效的手机号</p>
+        </div>
+        <div class="register_form_item">
+            <img class="register_check_img" src="http://127.0.0.1:5000/zc_register/image_code?code_id=1234" alt="">
+            <input id="password" type="password" autocomplete="off" placeholder="输入图片验证码">
+            <p class="tip">图片验证码错误</p>
+        </div>
+        <div class="register_form_item">
+            <button class="register_check_img send_phone_sms">发送手机验证码</button>
+            <input id="password" type="password" autocomplete="off" placeholder="输入手机验证码">
+            <p class="tip">邮箱或密码不正确</p>
+        </div>
+        <div class="register_form_item"><button id="submit" class="register_button">注册</button></div>
+        <div class="reg-bar" style="margin: 0 auto; width: 180px;">
+            &nbsp;&nbsp;
+            <a id="enter_login" class="reg" href="javascript:" >&nbsp;已有账户名，立即登录？&nbsp;</a>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            var $login_box = $('#login_box')
+            var $register_box = $('#register_box')
+            var $enter_register = $('#enter_register')
+            var $enter_login = $('#enter_login')
+            
+            $enter_register.click(fc_enter_register)// 点击进入注册
+            $enter_login.click(fc_enter_login) // 点击进入登录
+
+            function fc_enter_register(){
+                $login_box.hide()
+                $register_box.fadeIn()
+            }
+            function fc_enter_login(){
+                $login_box.fadeIn()
+                $register_box.hide()
+            }
+        })
+    </script>
+</body>
+</html>
