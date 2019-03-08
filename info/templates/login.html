@@ -18,8 +18,11 @@
         .register_form_item input { width: 288px; height: 48px; padding-left: 70px; border: 1px solid #fff; border-radius: 25px; font-size: 18px; color: #fff; background-color: transparent; outline: none;}
         .register_button { width: 360px; height: 50px; border: 0; border-radius: 25px; font-size: 18px; color: #1f6f4a; outline: none; cursor: pointer; background-color: #fff; margin-top: 10px; }
         .register_check_img {width: 130px; height: 48px; position: absolute; border-radius: 25px; right: 1px; top: 1px;}
-        .send_phone_sms {border: 1px solid #fff; background: none;}
-        #username { background: url(../static/picture/emil.png) 20px 14px no-repeat; }
+        .send_phone_sms {border: 1px solid #fff; background: white;}
+        #username { background: url(../static/picture/phone.png) 20px 9px no-repeat; background-size: 30px;}
+        .wait_station { background: url(../static/picture/waiting.png) 20px 9px no-repeat; background-size: 30px; }
+        .ok_station { background: url(../static/picture/OK.png) 20px 9px no-repeat; background-size: 30px; }
+        .ng_station { background: url(../static/picture/NG.png) 20px 9px no-repeat; background-size: 30px; }
         #password { background: url(../static/picture/password.png) 23px 11px no-repeat; }
         .tip { display: none; position: absolute; left: 20px; top: 52px; font-size: 14px; color: #f50; }
         .reg-bar { width: 360px; margin: 20px auto 0; font-size: 14px; overflow: hidden;}
@@ -62,28 +65,28 @@
     <!-- 注册栏 -->
     <div id="register_box" class="dowebok" style="display:none; padding-top: 40px;">
         <div class="register_form_item">
-            <input id="username" type="text"  placeholder="请输入一个新用户名">
+            <input class="wait_station" type="text"  placeholder="请输入一个新用户名">
             <p class="tip">该用户名已存在</p>
         </div>
         <div class="register_form_item">
-            <input id="password" type="password" autocomplete="off" placeholder="请输入密码">
+            <input class="wait_station" type="password" autocomplete="off" placeholder="请输入密码">
         </div>
         <div class="register_form_item">
-            <input id="password" type="password" autocomplete="off" placeholder="请再次确认密码">
+            <input class="wait_station" type="password" autocomplete="off" placeholder="请再次确认密码">
             <p class="tip">两次密码不一致</p>
         </div>
         <div class="register_form_item">
-            <input id="username" type="text"  placeholder="请输入手机号">
+            <input class="wait_station" type="text"  placeholder="请输入手机号">
             <p class="tip">请输入有效的手机号</p>
         </div>
         <div class="register_form_item">
-            <img class="register_check_img" src="http://127.0.0.1:5000/zc_register/image_code?code_id=1234" alt="">
-            <input id="password" type="password" autocomplete="off" placeholder="输入图片验证码">
+            <img id="code_img" class="register_check_img" src="" alt="">
+            <input class="wait_station" type="password" autocomplete="off" placeholder="输入图片验证码">
             <p class="tip">图片验证码错误</p>
         </div>
         <div class="register_form_item">
             <button class="register_check_img send_phone_sms">发送手机验证码</button>
-            <input id="password" type="password" autocomplete="off" placeholder="输入手机验证码">
+            <input class="wait_station" type="password" autocomplete="off" placeholder="输入手机验证码">
             <p class="tip">邮箱或密码不正确</p>
         </div>
         <div class="register_form_item"><button id="submit" class="register_button">注册</button></div>
@@ -98,17 +101,36 @@
             var $register_box = $('#register_box')
             var $enter_register = $('#enter_register')
             var $enter_login = $('#enter_login')
+            var $code_img = $('#code_img')
             
             $enter_register.click(fc_enter_register)// 点击进入注册
             $enter_login.click(fc_enter_login) // 点击进入登录
 
             function fc_enter_register(){
                 $login_box.hide()
+                fc_get_code_img()
                 $register_box.fadeIn()
             }
             function fc_enter_login(){
                 $login_box.fadeIn()
                 $register_box.hide()
+            }
+            // 获取验证码图片
+            function fc_get_code_img(){
+                var uuid = fc_generate_uuid()
+                var url = 'http://127.0.0.1:5000/zc_register/image_code?code_id=' + uuid
+                $code_img.prop('src', url)
+            }
+            // 生成uuid
+            function fc_generate_uuid(){
+                var d = new Date().getTime();
+                if(window.performance && typeof window.performance.now === "function"){d += performance.now()}
+                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+                    function(c){
+                    var r = (d + Math.random()*16)%16 | 0;d = Math.floor(d/16);
+                    return (c =='x' ? r : (r&0x3|0x8)).toString(16);
+                    });
+                return uuid;
             }
         })
     </script>
