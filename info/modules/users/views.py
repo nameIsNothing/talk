@@ -1,3 +1,4 @@
+import random
 from datetime import datetime
 import re
 
@@ -8,6 +9,7 @@ from flask import session
 
 from info import redis_store, db
 from info.models import Users
+from info.utils.yuntongxun.sms import CCP
 from . import zc_register_blu
 
 #验证码
@@ -32,35 +34,87 @@ def image_code():
 
     return resp
 
+#发送短信
+@zc_register_blu.route('/sms', methods=['POST'])
+def smscode():
+    data = request.json
+    mobile = data['mobile']
+    image_code = data['image_code']
+    image_code_id = data['image_code_id']
+
+
+    if not all([mobile, image_code, image_code_id]):
+        return jsonify(error=404, errmsg='参数不全')
+
+    if not re.match("^1[3578][0-9]{9}$", mobile):
+        return jsonify(error=404, errmsg='手机号码格式不正确')
+
+    try:
+        get_image_code = redis_store.get('ImageCode_' + image_code_id)
+        if get_image_code:
+            get_image_code = get_image_code.decode()
+            redis_store.delete('ImageCode_' + image_code_id)
+
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='图片验证码获取失败')
+
+    if not get_image_code:
+        return jsonify(error=404, errmsg='验证码已过期')
+
+    if image_code.lower() != get_image_code.lower():
+        return jsonify(error=404, errmsg='验证码不正确')
+
+    try:
+        mobiles = Users.query.filter_by(mobile=mobile).first()
+    except Exception as e:
+        return jsonify(error=404, errmsg='数据库查询失败')
+    if mobiles:
+        return  jsonify(error=404, errmsg='手机号已注册')
+
+    result = random.randint(0,999999)
+    sms_code = "%06d" % result
+    print(sms_code)
+    current_app.logger.debug("短信验证码内容：%s" %sms_code)
+    result_code = CCP().send_template_sms(mobile, [sms_code, 5], "1")
+
+    if result_code != 0:
+        return jsonify(error=404, errmsg='发送短信失败')
+
+    try:
+        redis_store.set("SMS_" + mobile, sms_code, 300)
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='保存失败')
+
+    return jsonify(error=200, errmsg='OK')
+
 # 注册
 @zc_register_blu.route('/register', methods=["POST"])
 def register():
     data = request.json
     username = data['username']
+    mobile = data['mobile']
+    smscode = data['smscode']
     password = data['password']
-    # image_code = data['image_code']
-    # image_code_id = data['image_code_id']
 
-    if not all([username, password]):
+    if not all([username, password, mobile, smscode]):
         return jsonify(error=404, errmsg='参数不全')
 
-    # try:
-    #     get_image_code = redis_store['image_code'+image_code_id]
-    #     if get_image_code:
-    #         get_image_code = get_image_code.decode()
-    #         redis_store.delete('image_code'+image_code_id)
-    #
-    # except Exception as e:
-    #     current_app.logger.error(e)
-    #     return jsonify(error=404, errmsg='获取图片验证码失败')
-    #
-    # if not get_image_code:
-    #     return  jsonify(error=404, errmsg='图片验证码已过期')
-    #
-    # if get_image_code != image_code:
-    #     return jsonify(error=404, errmas='验证码不正确')
+    try:
+        get_smscode = redis_store.get('SMS_'+mobile)
 
-    if not re.match("^\w{6,16}$", username):
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='数据库查询失败')
+
+    if get_smscode:
+        return jsonify(error=404, errmsg='短信验证码已过期')
+
+    if get_smscode != smscode:
+        return jsonify(error=404, errmsg='短信验证码错误')
+
+    if not re.match(r"^\w{6,16}$", username):
         return jsonify(error=404, errmsg='用户名格式不正确')
 
     try:
@@ -72,7 +126,7 @@ def register():
     if user:
         return jsonify(error=404, errmsg='用户名已存在')
 
-    if not re.match("(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}", password):
+    if not re.match(r"(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}", password):
         return jsonify(error=404, errmsg='密码格式不正确')
 
     # 保存数据
@@ -80,6 +134,7 @@ def register():
     users = Users()
     users.user_name = username
     users.password = password
+    users.mobile = mobile
 
     try:
         db.session.add(users)
@@ -96,7 +151,7 @@ def register():
 
     return jsonify(error=200, errmas='ok')
 
-
+# 登录
 @zc_register_blu.route('/login', methods=["POST"])
 def login():
     data = request.json
@@ -113,7 +168,13 @@ def login():
         return jsonify(error=404, errmsg='数据库查询错误')
 
     if not users:
-        return jsonify(error=404, errmsg='没有此用户')
+        try:
+            users = Users.query.filter_by(mobile=username).first()
+        except Exception as e:
+            current_app.logger.error(e)
+            return jsonify(error=404, errmsg='数据库查询失败')
+        if not users:
+            return jsonify(error=404, errmsg='没有此用户')
 
     if  users.password != password:
         print(users.password)
@@ -133,3 +194,5 @@ def login():
         current_app.logger.error(e)
 
     return jsonify(error=200, errmsg='ok')
+
+
