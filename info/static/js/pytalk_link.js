@@ -13,8 +13,6 @@ $(function(){
     var $link_add_box = $('.link_add_box')
     var $add_link_button = $('#add_link')
     var $close_linkaddbox = $('#close_linkaddbox')
-    var $link_edit_img_clink = $('#link_edit')
-    var $link_del_img_clink = $('#del_link')
     var $link_name = $('#link_name')
     var $link_url = $('#link_url')
     // 更新链接列表
@@ -153,7 +151,7 @@ $(function(){
                     var id = list_link[i]['link_id']
                     var name = list_link[i]['link_name']
                     var url = list_link[i]['link_url']
-                    list_link_date = list_link_date + '<li><a id="'+ id + '" href="' + url + '" target="_blank">' + name + '</a><img id="del_link" class="link_edit_img" src="../static/picture/delete.jpg" alt="删除" title="删除">&nbsp;<img id="link_edit" class="link_edit_img" src="../static/picture/update.jpg" alt="修改" title="修改"></li>'
+                    list_link_date = list_link_date + '<li><a id="'+ id + '" href="' + url + '" target="_blank">' + name + '</a><img id="del_link" class="link_edit_img" src="../static/picture/delete.png" alt="删除" title="删除">&nbsp;<img id="link_edit" class="link_edit_img" src="../static/picture/update.png" alt="修改" title="修改"></li>'
                 $link_list.html(list_link_date)
                   $link_edit_img=$('.link_list li img')
 

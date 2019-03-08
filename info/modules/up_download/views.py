@@ -60,25 +60,27 @@ def update_file_list():
     return jsonify(file_list=data_list)
 
 # 删除文件
-@up_download_blu.route('/delete_file')
-def delete_file():
-    file_address = request.args.get('file_address')
+@up_download_blu.route('/delete_file/<int:file_id>', methods = ['DELETE'])
+def delete_file(file_id):
     try:
-        info = delete(file_address)
+        file = File.query.get(file_id)
+    except Exception:
+        return jsonify({'error_no':503, 'error_ms':'数据库异常或没有该查询单位'})
+    try:
+        info = delete(file.file_address)
     except Exception as e:
         return '连接远程失败'
     if info == None:
-        if rmdate(file_address):
+        if rmdate(file):
             return '删除数据失败'
         return '远程已无文件删除，已更新数据库'
-    if rmdate(file_address):
+    if rmdate(file):
         return '删除数据失败'
-    return '成功'
+    return jsonify({'error_no':200,'error_ms':'ok'})
 
-def rmdate(file_address):
+def rmdate(file_object):
     try:
-        dat = File.query.filter(File.file_address == file_address).first()
-        db.session.delete(dat)
+        db.session.delete(file_object)
         db.session.commit()
     except Exception as e:
         return 'false'

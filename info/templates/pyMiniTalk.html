@@ -33,21 +33,24 @@
                          <button id="up_bt">上传</button>&#12288;<button id="up_out">取消</button>
                    
                 </div>
-                <ul>
+                <ul id="all_file_list">
                     <li>
-                        <div class="level1"><div>学习文件</div><span title="文件上传" id="st_up">+</span></div>
-                        
+                        <div class="level1"><span>知识文件</span>
+                            <div id="st_file_start_edit"><button title="文件编辑" id="st_up" class="link_edit_button">+</button></div>
+                            <div id="st_file_edit_div" style="display:none"><button id="st_file_out_edit_button" title="取消">取消</button><button id="file_openadd_st_box_button" title="上传">上传</button></div>
+                        </div>
                         <ul class="s_list" id="st_list">
                             
                         </ul>
                     </li>
-        
-                     <li>
-                        <div class="level1"><div>其他文件</div><span title="文件上传" id="or_up">+</span></div>
-                        <ul class="s_list" id="oth_list" >
-                            
-                        </ul>
-                    </li>    
+                    <li>
+                         <div class="level1"><span>其他文件</span>
+                            <div id="ot_file_start_edit"><button title="文件编辑" id="ot_up" class="link_edit_button">+</button></div>
+                            <div id="ot_file_edit_div" style="display:none"><button id="ot_file_out_edit_button" title="取消">取消</button><button id="file_openadd_ot_box_button" title="上传">上传</button></div>
+                         </div>
+                            <ul class="s_list" id="oth_list">
+                         </ul>
+                     </li>
                 </ul>    
             </div>
             <div class="talk_box"><!-- 聊天主框 -->
