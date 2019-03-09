@@ -38,9 +38,23 @@ def image_code():
 @zc_register_blu.route('/sms', methods=['POST'])
 def smscode():
     data = request.json
-    mobile = data['mobile']
-    image_code = data['image_code']
-    image_code_id = data['image_code_id']
+    try:
+        mobile = data['mobile']
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='参数不全')
+
+    try:
+        image_code = data['image_code']
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='参数不全')
+
+    try:
+        image_code_id = data['image_code_id']
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='图片验证码获取失败')
 
     if not all([mobile, image_code, image_code_id]):
         return jsonify(error=404, errmsg='参数不全')
@@ -181,7 +195,13 @@ def register():
 @zc_register_blu.route('/usernams_s')
 def username_s():
     data = request.json
-    username = data['username']
+
+    try:
+        username = data['username']
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='用户名不能为空')
+
     if not re.match(r"^\w{6,16}$", username):
         return jsonify(error=404, errmsg='用户名格式不正确')
 
@@ -194,12 +214,23 @@ def username_s():
     if user:
         return jsonify(error=404, errmsg='用户名已存在')
 
+    return jsonify(error=200, errmsg='ok')
+
 # 登录
 @zc_register_blu.route('/login', methods=["POST"])
 def login():
     data = request.json
-    username = data['username']
-    password = data['password']
+    try:
+        username = data['username']
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='参数不全')
+
+    try:
+        password = data['password']
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='参数不全')
 
     if not all ([username,password]):
         return jsonify(error=404, errmsg='参数不全')
