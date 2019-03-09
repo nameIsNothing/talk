@@ -140,7 +140,17 @@ def register():
     if get_smscode != smscode:
         return jsonify(error=404, errmsg='短信验证码错误')
 
+    if not re.match(r"^\w{6,16}$", username):
+        return jsonify(error=404, errmsg='用户名格式不正确')
 
+    try:
+        user = Users.query.filter_by(user_name=username).first()
+
+    except Exception as e:
+        return jsonify(error=404, errmsg='数据库查询失败')
+
+    if user:
+        return jsonify(error=404, errmsg='用户名已存在')
 
     if not re.match(r"(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}", password):
         return jsonify(error=404, errmsg='密码格式不正确')
