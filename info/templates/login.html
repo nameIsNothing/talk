@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>绿色清爽响应式登录页面模板</title>
+    <title>登陆与注册</title>
+    <link rel="icon" type="image/x-icon" href="../static/picture/logo.ico">
     <script  src="../static/js/jquery-1.7.2.min.js"></script>
+    <script  src="../static/js/login_register.js"></script>
+    <script  src="../static/js/login_alert.js"></script>
     <style>
         * { margin: 0; padding: 0; }
         html { height: 100%; }
@@ -25,6 +28,7 @@
         .ng_station { background: url(../static/picture/NG.png) 20px 9px no-repeat; background-size: 30px; }
         #password { background: url(../static/picture/password.png) 23px 11px no-repeat; }
         .tip { display: none; position: absolute; left: 20px; top: 52px; font-size: 14px; color: #f50; }
+        .tip2 { display: none; position: absolute; left: 20px; top: 50px; font-size: 13px; color: #f50; }
         .reg-bar { width: 360px; margin: 20px auto 0; font-size: 14px; overflow: hidden;}
         .reg-bar a { color: #fff; text-decoration: none; }
         .reg-bar a:hover { text-decoration: underline; }
@@ -50,11 +54,11 @@
         <div class="logo"></div>
         <div class="login_form_item">
             <input id="username" type="text"  placeholder="请输入用户名或手机号">
-            <p class="tip">请输入有效的用户名</p>
+            <p class="tip">请输入用户名或手机号</p>
         </div>
         <div class="login_form_item">
             <input id="password" type="password" autocomplete="off" placeholder="登录密码">
-            <p class="tip">邮箱或密码不正确</p>
+            <p class="tip">请输入有效的密码</p>
         </div>
         <div class="login_form_item"><button id="submit">登 录</button></div>
         <div class="reg-bar">
@@ -65,74 +69,36 @@
     <!-- 注册栏 -->
     <div id="register_box" class="dowebok" style="display:none; padding-top: 40px;">
         <div class="register_form_item">
-            <input class="wait_station" type="text"  placeholder="请输入一个新用户名">
-            <p class="tip">该用户名已存在</p>
+            <input id="create_username" class="wait_station" type="text"  placeholder="请输入一个新用户名">
+            <p class="tip2">该用户名已存在</p>
+        </div>
+        <div  class="register_form_item">
+            <input id="password_1" class="wait_station" type="password" autocomplete="off" placeholder="请输入密码">
+            <p class="tip2">密码请保持在8～20位之间</p>
+        </div>
+        <div  class="register_form_item">
+            <input id="password_2" class="wait_station" type="password" autocomplete="off" placeholder="请再次确认密码">
+            <p class="tip2">两次密码不一致</p>
         </div>
         <div class="register_form_item">
-            <input class="wait_station" type="password" autocomplete="off" placeholder="请输入密码">
-        </div>
-        <div class="register_form_item">
-            <input class="wait_station" type="password" autocomplete="off" placeholder="请再次确认密码">
-            <p class="tip">两次密码不一致</p>
-        </div>
-        <div class="register_form_item">
-            <input class="wait_station" type="text"  placeholder="请输入手机号">
-            <p class="tip">请输入有效的手机号</p>
+            <input id="phone_no" class="wait_station" type="text"  placeholder="请输入手机号">
+            <p class="tip2">请输入有效的手机号</p>
         </div>
         <div class="register_form_item">
             <img id="code_img" class="register_check_img" src="" alt="">
-            <input class="wait_station" type="password" autocomplete="off" placeholder="输入图片验证码">
-            <p class="tip">图片验证码错误</p>
+            <input id="input_img_code" class="wait_station" type="password" autocomplete="off" placeholder="输入图片验证码">
+            <p class="tip2">图片验证码缺失或错误</p>
         </div>
         <div class="register_form_item">
-            <button class="register_check_img send_phone_sms">发送手机验证码</button>
-            <input class="wait_station" type="password" autocomplete="off" placeholder="输入手机验证码">
-            <p class="tip">邮箱或密码不正确</p>
+            <button id="send_ph_sms" class="register_check_img send_phone_sms">发送手机验证码</button>
+            <input id="phone_sms" class="wait_station" type="password" autocomplete="off" placeholder="输入手机验证码">
+            <p class="tip2">手机验证码缺失或错误</p>
         </div>
-        <div class="register_form_item"><button id="submit" class="register_button">注册</button></div>
+        <div class="register_form_item"><button id="register" class="register_button">注册</button></div>
         <div class="reg-bar" style="margin: 0 auto; width: 180px;">
             &nbsp;&nbsp;
             <a id="enter_login" class="reg" href="javascript:" >&nbsp;已有账户名，立即登录？&nbsp;</a>
         </div>
     </div>
-    <script>
-        $(function(){
-            var $login_box = $('#login_box')
-            var $register_box = $('#register_box')
-            var $enter_register = $('#enter_register')
-            var $enter_login = $('#enter_login')
-            var $code_img = $('#code_img')
-            
-            $enter_register.click(fc_enter_register)// 点击进入注册
-            $enter_login.click(fc_enter_login) // 点击进入登录
-
-            function fc_enter_register(){
-                $login_box.hide()
-                fc_get_code_img()
-                $register_box.fadeIn()
-            }
-            function fc_enter_login(){
-                $login_box.fadeIn()
-                $register_box.hide()
-            }
-            // 获取验证码图片
-            function fc_get_code_img(){
-                var uuid = fc_generate_uuid()
-                var url = 'http://127.0.0.1:5000/zc_register/image_code?code_id=' + uuid
-                $code_img.prop('src', url)
-            }
-            // 生成uuid
-            function fc_generate_uuid(){
-                var d = new Date().getTime();
-                if(window.performance && typeof window.performance.now === "function"){d += performance.now()}
-                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
-                    function(c){
-                    var r = (d + Math.random()*16)%16 | 0;d = Math.floor(d/16);
-                    return (c =='x' ? r : (r&0x3|0x8)).toString(16);
-                    });
-                return uuid;
-            }
-        })
-    </script>
 </body>
 </html>

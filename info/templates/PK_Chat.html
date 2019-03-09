@@ -1,37 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'base.html' %}
+{% block heads_block %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Python34</title>
-    <link  rel="icon" type="image/x-icon" href="../static/picture/logo.ico">
-    <link rel="stylesheet" href="../static/css/pytalk.css">
-    <script src="../static/js/jquery-1.7.2.min.js"></script>
+{% endblock %}
+{% block titleBlock %}
+   PK Chat
+{% endblock %}
+{% block CSS_Block %}
+   <link rel="stylesheet" href="../static/css/pytalk.css">
+{% endblock %}
+{% block JS_Block %}
     <script src="../static/js/pytalk_chat.js"></script>
-    <script src="../static/js/pytalk_background_animate.js"></script>
     <script src="../static/js/pytalk_updown.js"></script>
     <script src="../static/js/pytalk_link.js"></script>
-
-</head>
-<body>
-    <div class="first_line">
+{% endblock %}
+{% block  Body_Block %}
+       <div class="first_line">
     <div class="logo_head">
         <!-- logo  -->
-        <h1>不忘初心，砥砺前行！</h1> 
+        <h1>不忘初心，砥砺前行！</h1>
     </div>
     </div>
 
     <div class="second_line">
-        
-
          <div class="talk_body"><!-- 聊天主行 -->
             <div class="file_download" id="download_box"><!-- 文件主题界面 -->
                 <div class="update_box"><!-- 上传隐藏栏 -->
                     <form action=""><input type="file"  id="up_file"></form>
                          <br>&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;
                          <button id="up_bt">上传</button>&#12288;<button id="up_out">取消</button>
-                   
+
                 </div>
                 <ul id="all_file_list">
                     <li>
@@ -40,7 +38,7 @@
                             <div id="st_file_edit_div" style="display:none"><button id="st_file_out_edit_button" title="取消">取消</button><button id="file_openadd_st_box_button" title="上传">上传</button></div>
                         </div>
                         <ul class="s_list" id="st_list">
-                            
+
                         </ul>
                     </li>
                     <li>
@@ -51,11 +49,11 @@
                             <ul class="s_list" id="oth_list">
                          </ul>
                      </li>
-                </ul>    
+                </ul>
             </div>
             <div class="talk_box"><!-- 聊天主框 -->
                 <div class="talk_contant" id="talk_con"><!-- 聊天内容界面 -->
-                    <div class="history" id="history"><span  >—— —— 查看历史记录 —— ——</span></div> 
+                    <div class="history" id="history"><span  >—— —— 查看历史记录 —— ——</span></div>
                     <!-- <div class="atalk"><span>A说： 吃饭了吗？</span><p> 2018/12/9 14:21</p></div>
                     <div class="btalk"><span>B说：还没呢，你呢？</span><p> 2018/12/9 14:21</p></div> -->
 
@@ -67,7 +65,7 @@
                 <div class="talk_input_contant" ><!-- 聊天输入框区 -->
                     <textarea name="" id="send_data" cols="30" rows="10"></textarea>
                     <button id="send_bt">发&emsp;送</button>
-                    
+
                 </div>
             </div>
             <div class="link_box"> <!-- 链接地址 -->
@@ -83,14 +81,8 @@
                 <ul class="link_list">
 
                 </ul>
-               
-                
+
             </div>
         </div>
     </div>
-
-    <div class='PK'>PK.</div>
-    <!-- 背景动画块 -->
-    <canvas id=c></canvas>
-</body>
-</html>
+{% endblock %}
