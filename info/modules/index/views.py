@@ -9,5 +9,8 @@ def index():
 
 @index_blu.route('/pytalk')
 def chat():
-    return render_template('pyMiniTalk.html')
+    return render_template('PK_Chat.html')
 
+@index_blu.route('/login')
+def login():
+    return render_template('login.html')

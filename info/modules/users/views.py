@@ -27,7 +27,7 @@ def image_code():
 
     except Exception as e:
         current_app.logger.error(e)
-        return jsonify(error=4004, errmsg='保存图片验证码失败')
+        return jsonify(error=404, errmsg='保存图片验证码失败')
 
     resp = make_response(image)
     resp.headers['Content-Type'] = 'image/jpg'
@@ -41,7 +41,6 @@ def smscode():
     mobile = data['mobile']
     image_code = data['image_code']
     image_code_id = data['image_code_id']
-
 
     if not all([mobile, image_code, image_code_id]):
         return jsonify(error=404, errmsg='参数不全')
