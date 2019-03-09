@@ -93,13 +93,40 @@ def smscode():
 @zc_register_blu.route('/register', methods=["POST"])
 def register():
     data = request.json
-    username = data['username']
-    mobile = data['mobile']
-    smscode = data['smscode']
-    password = data['password']
-
-    if not all([username, password, mobile, smscode]):
+    try:
+        username = data['username']
+    except Exception as e:
+        current_app.logger.error(e)
         return jsonify(error=404, errmsg='参数不全')
+
+    try:
+        mobile = data['mobile']
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='参数不全')
+    try:
+        smscode = data['smscode']
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='参数不全')
+
+    try:
+        password = data['password']
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='参数不全')
+
+    try:
+        password_2 = data['password_2']
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(error=404, errmsg='参数不全')
+
+    if not all([username, password, password_2,  mobile, smscode]):
+        return jsonify(error=404, errmsg='参数不全')
+
+    if password_2 != password:
+        return jsonify(error=404, errmsg='两次密码输入不一致')
 
     try:
         get_smscode = redis_store.get('SMS_'+mobile)
@@ -114,17 +141,7 @@ def register():
     if get_smscode != smscode:
         return jsonify(error=404, errmsg='短信验证码错误')
 
-    if not re.match(r"^\w{6,16}$", username):
-        return jsonify(error=404, errmsg='用户名格式不正确')
 
-    try:
-        user = Users.query.filter_by(user_name=username).first()
-
-    except Exception as e:
-        return jsonify(error=404, errmsg='数据库查询失败')
-
-    if user:
-        return jsonify(error=404, errmsg='用户名已存在')
 
     if not re.match(r"(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}", password):
         return jsonify(error=404, errmsg='密码格式不正确')
@@ -150,6 +167,23 @@ def register():
     session['username'] = users.user_name
 
     return jsonify(error=200, errmas='ok')
+
+#用户名验证
+@zc_register_blu.route('/usernams_s')
+def username_s():
+    data = request.json
+    username = data['username']
+    if not re.match(r"^\w{6,16}$", username):
+        return jsonify(error=404, errmsg='用户名格式不正确')
+
+    try:
+        user = Users.query.filter_by(user_name=username).first()
+
+    except Exception as e:
+        return jsonify(error=404, errmsg='数据库查询失败')
+
+    if user:
+        return jsonify(error=404, errmsg='用户名已存在')
 
 # 登录
 @zc_register_blu.route('/login', methods=["POST"])
