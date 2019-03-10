@@ -54,11 +54,11 @@
         <div class="logo"></div>
         <div class="login_form_item">
             <input id="username" type="text"  placeholder="请输入用户名或手机号">
-            <p class="tip">请输入用户名或手机号</p>
+            <p class="tip">请输入有效的用户名</p>
         </div>
         <div class="login_form_item">
             <input id="password" type="password" autocomplete="off" placeholder="登录密码">
-            <p class="tip">请输入有效的密码</p>
+            <p class="tip">密码长度错误</p>
         </div>
         <div class="login_form_item"><button id="submit">登 录</button></div>
         <div class="reg-bar">
@@ -70,7 +70,7 @@
     <div id="register_box" class="dowebok" style="display:none; padding-top: 40px;">
         <div class="register_form_item">
             <input id="create_username" class="wait_station" type="text"  placeholder="请输入一个新用户名">
-            <p class="tip2">该用户名已存在</p>
+            <p class="tip2"></p>
         </div>
         <div  class="register_form_item">
             <input id="password_1" class="wait_station" type="password" autocomplete="off" placeholder="请输入密码">
@@ -86,12 +86,12 @@
         </div>
         <div class="register_form_item">
             <img id="code_img" class="register_check_img" src="" alt="">
-            <input id="input_img_code" class="wait_station" type="password" autocomplete="off" placeholder="输入图片验证码">
+            <input id="input_img_code" class="wait_station" type="text" autocomplete="off" placeholder="输入图片验证码">
             <p class="tip2">图片验证码缺失或错误</p>
         </div>
         <div class="register_form_item">
             <button id="send_ph_sms" class="register_check_img send_phone_sms">发送手机验证码</button>
-            <input id="phone_sms" class="wait_station" type="password" autocomplete="off" placeholder="输入手机验证码">
+            <input id="phone_sms" class="wait_station" type="text" autocomplete="off" placeholder="输入手机验证码">
             <p class="tip2">手机验证码缺失或错误</p>
         </div>
         <div class="register_form_item"><button id="register" class="register_button">注册</button></div>

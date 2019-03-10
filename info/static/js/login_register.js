@@ -20,19 +20,27 @@ $(function(){
             var $register = $('#register')
             var uuid = null
             var submit_test = {username:false, password:false}
-            var register_test = {username:false, password1:false,password2:false, phone:false,img_code:false}
+            var register_test = {username:false, password1:false,password2:false, phone:false,img_code:false,phone_sms:false}
 
             $enter_register.click(fc_enter_register)// 点击进入注册
             $enter_login.click(fc_enter_login) // 点击进入登录
             // 登陆相关
             // 1用户名存在检测
             $username.blur(function (){
-                if ($(this).val() == ''){
-                    $(this).next().show()
-                }
-                else {
+                var re_test = /^[a-z][\w]{4,19}$/
+                var re_test2 = /^1[3578][\d]{9}$/
+                var username = $(this).val()
+                if (re_test.test(username)){
                     $(this).next().hide()
                     submit_test.username = true
+                }
+                else if (re_test2.test(username)){
+                    $(this).next().hide()
+                    submit_test.username = true
+                }
+                else {
+                    $(this).next().show()
+                    submit_test.username = false
                 }
             })
             // 2密码存在检测
@@ -52,15 +60,52 @@ $(function(){
                     $.MsgBox.Alert('温馨提醒', '请确认以上信息填写完全')
                 }
                 else {
-                    alert('登陆')
+                    $.ajax({
+                        url:'/zc_register/login',
+                        headers: {"X-CSRFToken": getCookie("csrf_token")},
+                        contentType: "application/json; charset=utf-8",
+                        type:'POST',
+                        dataType:'json',
+                        data:JSON.stringify({
+                        'username':$username.val(),
+                        'password':$password.val()
+                        })
+                    })
+                    .done(
+                    function(dat){
+                        if(dat['error'] == 404){
+
+                           $.MsgBox.Alert('消息',dat['errmsg'])
+                        }
+                        else if (dat['error'] == 200){
+                            $.MsgBox.Alert('消息','成功')
+                            window.location.href = "/";
+                        }
+                    })
+                    .fail(
+                    function(){
+                        $.MsgBox.Alert('提醒','网络连接错误，请检查下网络连接后重试')
+                    })
                 }
             })
             // 注册相关
             // 1离开用户名编辑检查是否存在
             $create_username.blur(function(){
-                $(this).next().show()
-                $(this).prop('class', 'ok_station')
-                register_test.username = true
+                var re_test = /^[a-z][\w]{4,19}$/
+                var username = $(this).val()
+                if (re_test.test(username)){
+                    fc_test_username(username)
+                }
+                else if (username.length < 6 || username.length >16){
+                    $(this).next().show().html('长度应在6～16位之间')
+                    $(this).prop('class', 'ng_station')
+                    register_test_test.username = false
+                }
+                else {
+                    $(this).next().show().html('第一位为字母，其他由大小字母，数字，下划线组成')
+                    $(this).prop('class', 'ng_station')
+                    register_test_test.username = false
+                }
             })
             // 2检查密码
             $password1.blur(function(){
@@ -69,6 +114,17 @@ $(function(){
                     $(this).prop('class', 'ok_station')
                     $(this).next().hide()
                     register_test.password1 = true
+                    if ($(this).val() != $password2.val()) {
+                        $password2.prop('class', 'ng_station')
+                        $password2.next().show().html('两次密码不一致')
+                        register_test.password2 = false
+                    }
+                    else if ($(this).val() === $password2.val()){
+                        $password2.prop('class', 'ok_station')
+                        $password2.next().hide()
+                        register_test.password2 = true
+                    }
+
                 }
                 else {
                     $(this).prop('class', 'ng_station')
@@ -92,7 +148,7 @@ $(function(){
                 }
                 else {
                     $(this).prop('class', 'ng_station')
-                    $(this).next().show()
+                    $(this).next().show().html('两次密码不一致')
                     register_test.password2 = false
                 }
             })
@@ -129,6 +185,7 @@ $(function(){
             $code_img.click(fc_get_code_img)
             // 6发送手机验证码
             $send_ph_sms.click(function () {
+                register_test.phone_sms = true
                 for ( i in register_test){
                     if (register_test[i] == false ) {
                         $.MsgBox.Alert('温馨提醒', '请确认以上信息填写完全')
@@ -149,7 +206,7 @@ $(function(){
                 })
                     .done(function (dat) {
                     if (dat['error'] == 404) {
-                        alert(dat['errmsg'])
+                        $.MsgBox.Alert('提醒',dat['errmsg'])
                         fc_get_code_img()
                     }
                     else {
@@ -164,20 +221,54 @@ $(function(){
             // 6检查手机验证码
             $phone_sms.blur(function () {
                 var len = $(this).val().length
-                if (len == 4) {
+                if (len == 6) {
                     $(this).prop('class', 'ok_station')
                     $(this).next().hide()
+                    register_test.phone_sms = true
                 }
                 else {
                     $(this).prop('class', 'ng_station')
                     $(this).next().show()
+                    register_test.phone_sms = false
                 }
             })
             // 7注册
             $register.click(function () {
-                $.MsgBox.Confirm('提醒','确认注册？',function () {
-                    alert('test ok')
+               for ( i in register_test){
+                    if (register_test[i] == false ) {
+                        $.MsgBox.Alert('温馨提醒', '请确认以上信息填写完全')
+                        return
+                    }
+                }
+                $.ajax({
+                url:'/zc_register/register',
+                headers: {"X-CSRFToken": getCookie("csrf_token")},
+                contentType: "application/json; charset=utf-8",
+                type:'POST',
+                dataType:'json',
+                data:JSON.stringify({
+                    'username':$create_username.val(),
+                    'mobile':$phone_no.val(),
+                    'smscode':$phone_sms.val(),
+                    'password':$password1.val(),
+                    'password_2':$password2.val(),
                 })
+                })
+                .done(
+                    function(dat){
+                        if(dat['error'] == 404){
+
+                           $.MsgBox.Alert('消息',dat['errmsg'])
+                        }
+                        else if (dat['error'] == 200){
+                            $.MsgBox.Alert('消息','成功')
+                            window.location.href = "/";
+                        }
+                    })
+                .fail(
+                    function(){
+                        $.MsgBox.Alert('提醒','网络连接错误，请检查下网络连接后重试')
+                    })
             })
 
             function fc_enter_register(){
@@ -197,7 +288,6 @@ $(function(){
             }
             // 重发验证码倒计时
             function fc_sendsms_time(){
-                $send_ph_sms.html('60秒后重发短信')
                 $send_ph_sms.css("pointer-events","none")
                 var time = 60
                 var time_str = ''
@@ -223,7 +313,34 @@ $(function(){
                     });
                 return uuid;
             }
-
+            // 发送验证用户名ajax
+            function fc_test_username(name) {
+                $.ajax({
+                url:'/zc_register/username_s',
+                headers: {"X-CSRFToken": getCookie("csrf_token")},
+                contentType: "application/json; charset=utf-8",
+                type:'POST',
+                dataType:'json',
+                data:JSON.stringify({'username':name})
+                })
+                .done(
+                    function(dat){
+                        if(dat['error'] == 404){
+                            $create_username.next().show().html('用户名已存在')
+                            $create_username.prop('class', 'ng_station')
+                            register_test.username = false
+                        }
+                        else if (dat['error'] == 200){
+                            $create_username.next().hide()
+                            $create_username.prop('class', 'ok_station')
+                            register_test.username = true
+                        }
+                    })
+                .fail(
+                    function(){
+                        $.MsgBox.Alert('提醒','网络连接错误，请检查下网络连接后重试')
+                    })
+            }
             function getCookie(name) {
                 var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
                 return r ? r[1] : undefined;

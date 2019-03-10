@@ -52,4 +52,4 @@ class Users(BaseModel, db.Model):
     name = db.Column(db.String(20), unique=True)
     user_name = db.Column(db.String(16), unique=True, nullable=False)
     password = db.Column(db.String(16), nullable=False)
-    mobile = db.Column(db.Integer)
+    mobile = db.Column(db.String(11), nullable=False)

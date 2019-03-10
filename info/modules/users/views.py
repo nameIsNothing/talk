@@ -74,11 +74,11 @@ def smscode():
     result = random.randint(0,999999)
     sms_code = "%06d" % result
     print(sms_code)
-    current_app.logger.debug("短信验证码内容：%s" %sms_code)
-    result_code = CCP().send_template_sms(mobile, [sms_code, 5], "1")
-
-    if result_code != 0:
-        return jsonify(error=404, errmsg='发送短信失败')
+    current_app.logger.debug("您的短信验证码内容为：%s" %sms_code)
+    # result_code = CCP().send_template_sms(mobile, [sms_code, 5], "1")
+    #
+    # if result_code != 0:
+    #     return jsonify(error=404, errmsg='发送短信失败')
 
     try:
         redis_store.set("SMS_" + mobile, sms_code, 300)
@@ -97,7 +97,6 @@ def register():
     except Exception as e:
         current_app.logger.error(e)
         return jsonify(error=404, errmsg='参数不全')
-
     try:
         mobile = data['mobile']
     except Exception as e:
@@ -134,13 +133,13 @@ def register():
         current_app.logger.error(e)
         return jsonify(error=404, errmsg='数据库查询失败')
 
-    if get_smscode:
+    if not get_smscode:
         return jsonify(error=404, errmsg='短信验证码已过期')
 
-    if get_smscode != smscode:
+    if get_smscode.decode() != smscode:
         return jsonify(error=404, errmsg='短信验证码错误')
 
-    if not re.match(r"^\w{6,16}$", username):
+    if not re.match(r"^[a-z][\w]{4,19}$", username):
         return jsonify(error=404, errmsg='用户名格式不正确')
 
     try:
@@ -152,12 +151,13 @@ def register():
     if user:
         return jsonify(error=404, errmsg='用户名已存在')
 
-    if not re.match(r"(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}", password):
+    if not re.match(r"^[\w]{8,16}", password):
         return jsonify(error=404, errmsg='密码格式不正确')
 
     # 保存数据
 
     users = Users()
+    users.name = username
     users.user_name = username
     users.password = password
     users.mobile = mobile
@@ -178,13 +178,12 @@ def register():
     return jsonify(error=200, errmas='ok')
 
 #用户名验证
-@zc_register_blu.route('/usernams_s')
+@zc_register_blu.route('/username_s', methods = ['POST'])
 def username_s():
     data = request.json
     username = data['username']
     if not re.match(r"^\w{6,16}$", username):
         return jsonify(error=404, errmsg='用户名格式不正确')
-
     try:
         user = Users.query.filter_by(user_name=username).first()
 
@@ -193,6 +192,7 @@ def username_s():
 
     if user:
         return jsonify(error=404, errmsg='用户名已存在')
+    return jsonify(error=200, errmsg='ok')
 
 # 登录
 @zc_register_blu.route('/login', methods=["POST"])
