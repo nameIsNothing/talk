@@ -89,10 +89,10 @@ def smscode():
     sms_code = "%06d" % result
     print(sms_code)
     current_app.logger.debug("您的短信验证码内容为：%s" %sms_code)
-    # result_code = CCP().send_template_sms(mobile, [sms_code, 5], "1")
-    #
-    # if result_code != 0:
-    #     return jsonify(error=404, errmsg='发送短信失败')
+    result_code = CCP().send_template_sms(mobile, [sms_code, 5], "1")
+
+    if result_code != 0:
+        return jsonify(error=404, errmsg='发送短信失败')
 
     try:
         redis_store.set("SMS_" + mobile, sms_code, 300)
@@ -108,33 +108,16 @@ def register():
     data = request.json
     try:
         username = data['username']
-    except Exception as e:
-        current_app.logger.error(e)
-        return jsonify(error=404, errmsg='参数不全')
-    try:
         mobile = data['mobile']
-    except Exception as e:
-        current_app.logger.error(e)
-        return jsonify(error=404, errmsg='参数不全')
-    try:
+        print(type(mobile))
         smscode = data['smscode']
-    except Exception as e:
-        current_app.logger.error(e)
-        return jsonify(error=404, errmsg='参数不全')
-
-    try:
         password = data['password']
-    except Exception as e:
-        current_app.logger.error(e)
-        return jsonify(error=404, errmsg='参数不全')
-
-    try:
         password_2 = data['password_2']
     except Exception as e:
         current_app.logger.error(e)
         return jsonify(error=404, errmsg='参数不全')
 
-    if not all([username, password, password_2,  mobile, smscode]):
+    if not all([username, password, password_2,  mobile]):
         return jsonify(error=404, errmsg='参数不全')
 
     if password_2 != password:
