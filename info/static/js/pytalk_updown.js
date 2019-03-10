@@ -51,15 +51,17 @@ $(function () {
         // 点击删除文件
         $all_file_list.delegate('#del_file', 'click', function(){
             var id = $(this).prev().prop('id')
-            fc_del_file_ajax(id)
-            update_list()
+            $.MsgBox.Confirm('温馨提醒','文件一旦删除后不可恢复，确认删除？',function () {
+                fc_del_file_ajax(id)
+                update_list()
+            })
         })
         // 上传面板功能
         var $up_bt = $('#up_bt')
         $up_bt.click(function(){
             var fd = $('#up_file')[0].files[0]
             if (fd == undefined){
-                alert('未选定文件，请重试！')
+                $.MsgBox.Alert('温馨提示','未选定文件，请选定文件后重试！')
                 $up_box.fadeOut(500)
                 return}
             $up_bt.css("pointer-events","none")
@@ -75,7 +77,7 @@ $(function () {
                 contentType:false,
             })
             .done(function(dat){
-                alert(dat.error)
+                $.MsgBox.Alert('消息',dat.error)
                 $up_box.fadeOut(500)
                 update_list()
                 $up_bt.css("pointer-events","")
@@ -83,7 +85,7 @@ $(function () {
                 fc_out_ot_edit()
             })
             .fail(function(){
-                alert('上传失败')
+                $.MsgBox.Alert('消息','上传失败！')
                 $up_bt.css("pointer-events","")
             })
 
@@ -117,7 +119,7 @@ $(function () {
                 }
                 $del_file_img = $('#download_box img')
             })
-            .fail(function(){alert('下载列表更新失败')})
+            .fail(function(){$.MsgBox.Alert('消息','更新列表失败！')})
             }
 
     function fc_del_file_ajax(id){
@@ -131,11 +133,11 @@ $(function () {
             function(dat){
                 fc_out_ot_edit()
                 fc_out_st_edit()
-                alert(dat['error_ms'])
+                $.MsgBox.Alert('消息',dat['error_ms'])
             })
         .fail(
             function(){
-                alert('请求失败，请检查网络连接')
+                $.MsgBox.Alert('消息','网络连接失败，请检查网络连接后重试！')
             }
         )
     }

@@ -38,19 +38,21 @@ $(function(){
     // 点击删除（委托）
     $link_list.delegate('#del_link', 'click',function(){
         var id = $(this).prev().prop('id')
-        fc_delete_link(id)
-        fc_get_linkdata()
+        $.MsgBox.Confirm('温馨提醒','删除后将无法撤回，确认删除？',function () {
+            fc_delete_link(id)
+            fc_get_linkdata()
+        })
     })
 
     // 发送新增/修改链接请求
     $add_link_button.click(function(){
         if ($link_name.val() == '' || $link_url.val() == ''){
-            alert('输入不能为空')
+            $.MsgBox.Alert('温馨提示','输入内容不能为空')
             return
         }
         for (i in linkname_list){
             if ($link_name.val() == linkname_list[i]){
-                alert('该名字已存在，请重新命名')
+                $.MsgBox.Alert('温馨提示','该链接名称已存在')
                 return
             }
         }
@@ -63,7 +65,7 @@ $(function(){
             fc_get_linkdata()
             }
         else {
-            alert('标记位错误！')
+            $.MsgBox.Alert('消息','标记位错误')
             }
 
     })
@@ -81,13 +83,13 @@ $(function(){
         })
         .done(
             function(dat){
-                alert(dat['error_ms'])
+                $.MsgBox.Alert('消息',dat['error_ms'])
                 fc_close_addOrEditlink()
                 fc_close_edit()
             })
         .fail(
             function(){
-                alert('请求失败，请检查网络连接')
+                $.MsgBox.Alert('温馨提示','网络连接失败，请检查网络连接')
             }
         )
     }
@@ -101,13 +103,13 @@ $(function(){
         })
         .done(
             function(dat){
-                alert('删除成功！')
+                $.MsgBox.Alert('消息','删除成功！')
                 fc_close_addOrEditlink()
                 fc_close_edit()
             })
         .fail(
             function(){
-                alert('请求失败，请检查网络连接')
+                $.MsgBox.Alert('温馨提示','网络连接失败，请检查网络连接')
             }
         )
     }
@@ -125,13 +127,13 @@ $(function(){
         })
         .done(
             function(dat){
-                alert('修改成功')
+                $.MsgBox.Alert('消息','修改成功！')
                 fc_close_addOrEditlink()
                 fc_close_edit()
             })
         .fail(
             function(){
-                alert('请求失败，请检查网络连接')
+                $.MsgBox.Alert('温馨提示','网络连接失败，请检查网络连接')
             }
         )
     }
@@ -160,7 +162,7 @@ $(function(){
             })
         .fail(
             function(){
-                alert('请求失败，请检查网络连接')
+                $.MsgBox.Alert('温馨提示','网络连接失败，请检查网络连接')
             }
         )
     }

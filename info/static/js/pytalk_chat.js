@@ -15,6 +15,7 @@ $(function(){
         var otalk_contant = document.getElementById('talk_con')
         var history_data = null
         var sign_index = ''
+        var oTime = null
         // 第一步先获取连接，获取初始信息交互
         $.ajax({url:'/pytalk/set_up',
             dataType:'json',
@@ -24,10 +25,9 @@ $(function(){
                 history_data = dat['history_data']})
                 // alert('返回'+ dat['index'])
             .fail(function(){
-                alert('连接失败，请重试')})
+                $.MsgBox.Alert('消息','网络连接异常，请检查后重试')
+                })
 
-
-        var oTime = null
         oTime = setInterval(get_talk_data,1000)
         // 持续获取消息
         function get_talk_data(){
@@ -59,7 +59,7 @@ $(function(){
                         otalk_contant.scrollTop = otalk_contant.scrollHeight}
                     })
             .fail(function(){
-                alert('连接失败，请尝试刷新')
+                $.MsgBox.Alert('消息','网络连接异常，请检查后重试')
                 clearInterval(oTime)})
         }
         // 点击发送
@@ -69,10 +69,10 @@ $(function(){
                 var send_data = $('#send_data').val()
                 var id_name = $('#id_name').val()
                 if (send_data == ''){
-                    alert('内容不能为空')
+                    $.MsgBox.Alert('温馨提示','输入内容不能为空')
                     return}
                 else if (id_name == ''){
-                    alert('名字不能为空')
+                    $.MsgBox.Alert('温馨提示','您还没有输入名字')
                     return}
                 $send_bt.css("pointer-events","none")
                 $.ajax({
@@ -92,7 +92,7 @@ $(function(){
                     })
                 .fail(
                     function(){
-                    alert('连接失败')
+                    $.MsgBox.Alert('消息','发送失败，请检查网络连接')
                     $send_bt.css("pointer-events","")
                     })
             }
@@ -110,7 +110,7 @@ $(function(){
             var $history = $('#history')
             var list = history_data
             if (list == null){
-                alert('无更多历史记录')
+                $.MsgBox.Alert('温馨提示','无更多历史消息')
                 return}
             list = list.split('($)&($)')
             list.splice(0,1)

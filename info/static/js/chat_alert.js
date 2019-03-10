@@ -51,23 +51,24 @@ $(function () {
             zIndex: '999999',
             width: '400px',
             position: 'fixed',
-            backgroundColor: 'White',
+            backgroundColor: 'rgba(255, 51, 204, 0.3)',
             borderRadius: '15px'
         });
         $("#mb_tit").css({
             display: 'block',
             fontSize: '14px',
-            color: '#444',
+            color: 'white',
             padding: '10px 15px',
-            backgroundColor: '#DDD',
+            backgroundColor: 'rgba(255, 51, 204, 0.3)',
             borderRadius: '15px 15px 0 0',
-            borderBottom: '3px solid green',
+            borderBottom: '3px solid purple',
             fontWeight: 'bold'
         });
         $("#mb_msg").css({
+            color: 'white',
             padding: '20px',
             lineHeight: '20px',
-            borderBottom: '1px dashed #DDD',
+            borderBottom: '1px dashed purple',
             fontSize: '13px'
         });
         $("#mb_ico").css({
@@ -75,7 +76,7 @@ $(function () {
             position: 'absolute',
             right: '10px',
             top: '9px',
-            border: '1px solid Gray',
+            border: '1px solid white',
             width: '18px',
             height: '18px',
             textAlign: 'center',
@@ -95,10 +96,10 @@ $(function () {
             border: 'none'
         });
         $("#mb_btn_ok").css({
-            backgroundColor: '#33CC33'
+            backgroundColor: 'rgba(255, 51, 204, 0.8)'
         });
         $("#mb_btn_no").css({
-            backgroundColor: 'gray',
+            backgroundColor: 'rgba(255, 51, 204, 0.8)',
             marginLeft: '20px'
         });
         //右上角关闭按钮hover样式
