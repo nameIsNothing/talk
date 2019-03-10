@@ -214,8 +214,6 @@ def username_s():
         return jsonify(error=404, errmsg='用户名已存在')
     return jsonify(error=200, errmsg='ok')
 
-    return jsonify(error=200, errmsg='ok')
-
 # 登录
 @zc_register_blu.route('/login', methods=["POST"])
 def login():
