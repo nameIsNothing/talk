@@ -283,7 +283,7 @@ $(function(){
             // 获取验证码图片
             function fc_get_code_img(){
                 uuid = fc_generate_uuid()
-                var url = 'http://127.0.0.1:5000/zc_register/image_code?code_id=' + uuid
+                var url = '/zc_register/image_code?code_id=' + uuid
                 $code_img.prop('src', url)
             }
             // 重发验证码倒计时

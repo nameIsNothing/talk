@@ -53,7 +53,6 @@ $(function () {
             var id = $(this).prev().prop('id')
             $.MsgBox.Confirm('温馨提醒','文件一旦删除后不可恢复，确认删除？',function () {
                 fc_del_file_ajax(id)
-                update_list()
             })
         })
         // 上传面板功能
@@ -133,6 +132,7 @@ $(function () {
             function(dat){
                 fc_out_ot_edit()
                 fc_out_st_edit()
+                update_list()
                 $.MsgBox.Alert('消息',dat['error_ms'])
             })
         .fail(

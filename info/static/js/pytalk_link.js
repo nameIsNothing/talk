@@ -38,7 +38,7 @@ $(function(){
     // 点击删除（委托）
     $link_list.delegate('#del_link', 'click',function(){
         var id = $(this).prev().prop('id')
-        $.MsgBox.Confirm('温馨提醒','删除后将无法撤回，确认删除？',function () {
+        $.MsgBox.Confirm('温馨提醒','删除后将无法撤回，确认删除？',function(){
             fc_delete_link(id)
         })
 
@@ -183,6 +183,8 @@ $(function(){
     }
     // 打开新增栏
     function fc_open_addlink(){
+        $link_name.val('')
+        $link_url.val('')
         marking_parameter = 'add'
         $add_link_button.html('添加')
         $link_add_box.fadeIn()
