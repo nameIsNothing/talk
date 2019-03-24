@@ -3,13 +3,13 @@
 from info.utils.yuntongxun.CCPRestSDK import REST
 
 # 说明：主账号，登陆云通讯网站后，可在"控制台-应用"中看到开发者主账号ACCOUNT SID
-_accountSid = '8a216da867c51dac0167c58cbe970122'
+_accountSid = '8aaf070867c517d20167caa3b8b0045f'
 
 # 说明：主账号Token，登陆云通讯网站后，可在控制台-应用中看到开发者主账号AUTH TOKEN
-_accountToken = 'e2bac000ffd4423582d451c02bc258c8'
+_accountToken = '65e56b0006474c4e87615bea7611e86a'
 # 65e56b0006474c4e87615bea7611e86a
 # 请使用管理控制台首页的APPID或自己创建应用的APPID
-_appId = '8a216da867c51dac0167c58cbef60129'
+_appId = '8aaf070867c517d20167caa3b9110466'
 
 # 说明：请求地址，生产环境配置成app.cloopen.com
 _serverIP = 'app.cloopen.com'
@@ -69,7 +69,7 @@ class CCP(object):
             return -1
 
 #
-# if __name__ == '__main__':
-#     ccp = CCP()
-#     # 注意： 测试的短信模板编号为1
-#     ccp.send_template_sms('13848422253', ['1234', 5], 1)
+if __name__ == '__main__':
+    ccp = CCP()
+    # 注意： 测试的短信模板编号为1
+    print(ccp.send_template_sms('18124019934', ['1234', 5], 1))

@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" >
-
 <head>
 <meta charset="UTF-8">
+
 {% block heads_block %}{% endblock %}
+
 <title>{% block titleBlock %}{% endblock %}</title>
 
 <link rel="icon" type="image/x-icon" href="../static/picture/logo.ico">
-{% block CSS_Block %}
 <style>
 .PK{position: fixed;top: 96%;left: 96%;color: white;}
-canvas{position:absolute;  top:0;  left:0;  background-color:black;  z-index: 1;}
+canvas{position:absolute;  top:0;  left:0;  background-color:black;  z-index: -1;}
+</style>
+
+{% block CSS_Block %}
+<style>
 div{margin: 0 auto;z-index: 2;position: absolute;top:50%;left: 45%;}
 div a{color: white;text-decoration: none}
 </style>
 {% endblock %}
+
 <script src="../static/js/jquery-1.7.2.min.js"></script>
 <script src="../static/js/background_animate.js"></script>
+
 {% block JS_Block %}
 {% endblock %}
+
 </head>
 <body>
+<div style="color：white">登陆/注册</div>
+
 {% block Body_Block %}
 <div><h2><a href="/pytalk">Welcome to PKworld</a></h2> <h1><a href="/login">登陆注册</a></h1> </div>
 {% endblock %}
+
 <div class='PK'>PK.</div>
     <!-- 背景动画块 -->
 <canvas id=c></canvas>

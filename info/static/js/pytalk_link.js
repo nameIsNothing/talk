@@ -40,8 +40,8 @@ $(function(){
         var id = $(this).prev().prop('id')
         $.MsgBox.Confirm('温馨提醒','删除后将无法撤回，确认删除？',function () {
             fc_delete_link(id)
-            fc_get_linkdata()
         })
+
     })
 
     // 发送新增/修改链接请求
@@ -58,11 +58,9 @@ $(function(){
         }
         if (marking_parameter == 'add'){
             fc_add_link($link_name.val(), $link_url.val())
-            fc_get_linkdata()
             }
         else if (marking_parameter == 'edit'){
             fc_update_link(marking_id, $link_name.val(), $link_url.val())
-            fc_get_linkdata()
             }
         else {
             $.MsgBox.Alert('消息','标记位错误')
@@ -86,6 +84,7 @@ $(function(){
                 $.MsgBox.Alert('消息',dat['error_ms'])
                 fc_close_addOrEditlink()
                 fc_close_edit()
+                fc_get_linkdata()
             })
         .fail(
             function(){
@@ -106,6 +105,7 @@ $(function(){
                 $.MsgBox.Alert('消息','删除成功！')
                 fc_close_addOrEditlink()
                 fc_close_edit()
+                fc_get_linkdata()
             })
         .fail(
             function(){
@@ -130,6 +130,7 @@ $(function(){
                 $.MsgBox.Alert('消息','修改成功！')
                 fc_close_addOrEditlink()
                 fc_close_edit()
+                fc_get_linkdata()
             })
         .fail(
             function(){
