@@ -109,7 +109,6 @@ def register():
     try:
         username = data['username']
         mobile = data['mobile']
-        print(type(mobile))
         smscode = data['smscode']
         password = data['password']
         password_2 = data['password_2']
@@ -154,7 +153,7 @@ def register():
     # 保存数据
 
     users = Users()
-    users.name = username
+    users.nickname = username
     users.user_name = username
     users.password = password
     users.mobile = mobile
@@ -250,4 +249,8 @@ def login():
 
     return jsonify(error=200, errmsg='ok')
 
-
+@zc_register_blu.route('/login_out', methods=["POST"])
+def login_out():
+    session.pop('id', None)
+    session.pop('username', None)
+    return jsonify(error = 200, errmsg = 'ok')

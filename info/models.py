@@ -49,7 +49,17 @@ class Users(BaseModel, db.Model):
     __tablename__ = 'user_info'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True)
+    nickname = db.Column(db.String(20), unique=True)
     user_name = db.Column(db.String(16), unique=True, nullable=False)
     password = db.Column(db.String(16), nullable=False)
     mobile = db.Column(db.String(11), nullable=False)
+
+    def to_dic(self):
+        dic = {
+            'user_id':self.id,
+            'nickname':self.nickname,
+            'user_name':self.user_name,
+            'mobile':self.mobile
+        }
+        return dic
+

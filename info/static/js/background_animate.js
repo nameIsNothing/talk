@@ -2,6 +2,24 @@
  * Created by python on 18-12-25.
  */
 $(function () {
+    function getCookie(name) {
+        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+        return r ? r[1] : undefined;
+        }
+
+    var $login_out = $('#login_out')
+    $login_out.click(function () {
+        $.ajax({
+            url: "/zc_register/login_out",
+        type: "post",
+        contentType: "application/json",
+        headers: {
+            "X-CSRFToken": getCookie("csrf_token")
+        }
+        }).done(function (reps) {
+            location.reload()
+        })
+    })
          //initial
     var w = c.width = window.innerWidth,
         h = c.height = window.innerHeight,

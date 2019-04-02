@@ -13,6 +13,7 @@
 canvas{position:absolute;  top:0;  left:0;  background-color:black;  z-index: -1;}
 .login_status{width: 1100px;margin: 0 auto;color: white}
 .login_status a{color: white;text-decoration: none}
+.hello_words{float: left}
 .login_r{float: right; }
 </style>
 
@@ -28,8 +29,18 @@ canvas{position:absolute;  top:0;  left:0;  background-color:black;  z-index: -1
 </head>
 <body>
 <div class="login_status">
-    hello! happy days.
+    <div class="hello_words">Hello! Happy days.</div>
+    {% if data.user_info %}
+            {# 如果登录，则显示用户信息 #}
+            <div class="login_r">
+                <a href="#">{{ data.user_info.nickname }}</a> /
+                <a href="#" id="login_out">退出</a>
+            </div>
+    {% else %}
+            {# 如果没有登录，则显示登录注册按钮 #}
     <div class="login_r"><a href="/login">登陆/注册</a></div>
+    {% endif %}
+
 </div>
 {% block Body_Block %}
 {% endblock %}
