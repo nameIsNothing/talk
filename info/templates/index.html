@@ -4,5 +4,38 @@
 PK Nothing is Impossible！
 {% endblock %}
 
+{% block CSS_Block %}
+<style>
+.line1{margin: 0 auto;z-index: 2;width: 1100px;height: 120px;padding-top: 20px;}
+.title{margin: 20px auto;z-index: 2;width: 800px;}
+.title h1{color: white;}
 
+.line2{margin: 0 auto;z-index: 2;width: 1100px;height: 600px;}
+.column{width: 260px;height: 300px; margin: 0px;padding: 20px 0 0 15px; float: left;background-color: rgba(255, 51, 204, 0.2);}
+.column div{width: 200px; height: 50px;margin: 20px 30px;line-height: 0px;}
+.column img{width: 30px; height: 25px;}
+.column a{text-decoration: none;color: white;font-size: 24px;margin-left: 10px;}
+.information{width: 700px; height: 340px;float: right;background-color: rgba(255, 51, 204, 0.2);}
+</style>
+{% endblock %}
+
+{% block Body_Block %}
+    <div class="line1">
+        <div class="title"><h1>Welcome to PKworld !</h1></div>
+    </div>
+
+    <div class="line2">
+        <div class="column" >
+          <div><img src="../static/picture/chat_d.png"> <a href="/pytalk">Public Chat</a></div>
+          <div><img src="../static/picture/lun_d.png"><a href="">论坛 building..</a></div>
+          <div><img src="../static/picture/problem.png"><a href="">尚未开发</a></div>
+          <div><img src="../static/picture/ms_d.png"><a href="/pytalk">留言板</a></div>
+        </div>
+        <div class="information">
+            information
+        </div>
+    </div>
+
+
+{% endblock %}
 
