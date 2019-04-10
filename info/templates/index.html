@@ -17,10 +17,18 @@ PK Nothing is Impossible！
 .column a{text-decoration: none;color: white;font-size: 22px;margin-left: 10px;}
 .information{width: 700px; height: 340px;float: right;background-color: rgba(255, 51, 204, 0.2);}
 
-.version_info{margin: 30px 0 0 30px;color: #666666;display: none;}
+.version_info{margin: 30px 0 0 30px;color: #666666;}
 .version_info h3{margin-bottom: 0px;}
 .version_info p{margin-top: 0px;}
+.chat_info{display: none}
+.luntan_info{display: none}
+.wait_work{display: none}
+.message_board{display: none}
 </style>
+{% endblock %}
+
+{% block JS_Block %}
+    <script  src="../static/js/index.js"></script>
 {% endblock %}
 
 {% block Body_Block %}
@@ -30,27 +38,29 @@ PK Nothing is Impossible！
 
     <div class="line2">
         <div class="column" >
-          <div><img src="../static/picture/chat_d.png"> <a href="/pytalk">Public Chat</a></div>
-          <div><img src="../static/picture/lun_d.png"><a href="">论坛 building..</a></div>
-          <div><img src="../static/picture/problem.png"><a href="">尚未开发</a></div>
-          <div><img src="../static/picture/ms_d.png"><a href="/pytalk">留言板</a></div>
+          <div><img src="../static/picture/chat_d.png"> <a href="/pytalk" id="chat">Public Chat</a></div>
+          <div><img src="../static/picture/lun_d.png"><a href="" id="luntan">论坛 building..</a></div>
+          <div><img src="../static/picture/problem.png"><a href="" id="wait">尚未开发</a></div>
+          <div><img src="../static/picture/ms_d.png"><a href="/pytalk" id="message">留言板</a></div>
         </div>
         <div class="information">
             <div class="version_info">
+                <h3>Version1.1:</h3>
+                <p>新增主页字体特效，栏目滑动。</p>
                 <h3>Version1.0:</h3>
                 <p>正式开放网页，增加登陆保持功能，进入公共聊天器需要登陆,增加手机验证码功能。</p>
             </div>
             <div class="chat_info">
-
+                chat_info
             </div>
             <div class="luntan_info">
-
+                luntan_info
             </div>
             <div class="wait_work">
-
+                wait_work
             </div>
             <div class="message_board">
-                
+                message_board
             </div>
         </div>
     </div>1
