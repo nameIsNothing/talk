@@ -1,10 +1,7 @@
-from flask import current_app
+
 from flask import g
 from flask import redirect
 from flask import render_template
-from flask import session
-
-from info.models import Users
 from info.utils.common import user_login_data
 from . import index_blu
 

@@ -89,7 +89,7 @@ def smscode():
     sms_code = "%06d" % result
     print(sms_code)
     current_app.logger.debug("您的短信验证码内容为：%s" %sms_code)
-    result_code = CCP().send_template_sms(mobile, [sms_code, 5], "1")
+    result_code = CCP().send_template_sms(mobile, [sms_code, 5], "419897")
 
     if result_code != 0:
         return jsonify(error=404, errmsg='发送短信失败')
